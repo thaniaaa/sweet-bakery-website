@@ -1,0 +1,225 @@
+.featured-food {
+  width: 100%;
+  padding: 96px 24px;
+  background: #fff;
+}
+
+.featured-food__container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.featured-food__title {
+  margin: 0;
+  color: #24171b;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(38px, 4vw, 52px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+
+.featured-food__description {
+  max-width: 650px;
+  margin: 16px 0 0;
+  color: #68565b;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.featured-food__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px 28px;
+  margin-top: 44px;
+}
+
+.featured-food__grid .featured-food__card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #efdfde;
+  border-radius: 3px;
+  background: #fff7f5;
+  box-shadow: none;
+}
+
+.featured-food__grid .featured-food__card--loaded {
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+@media (hover: hover) {
+  .featured-food__grid .featured-food__card--loaded:hover {
+    transform: translateY(-6px);
+    border-color: #e7b2ba;
+    box-shadow: 0 18px 36px rgba(137, 59, 78, 0.15);
+  }
+
+  .featured-food__card--loaded:hover .featured-food__image {
+    transform: scale(1.05);
+  }
+}
+
+.featured-food__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.featured-food__image,
+.featured-food__image-skeleton {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.featured-food__image {
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 250ms ease, transform 220ms ease;
+}
+
+.featured-food__image--loaded {
+  opacity: 1;
+}
+
+.featured-food__media .featured-food__image-skeleton {
+  position: absolute;
+  inset: 0;
+  border-radius: 0;
+  background: #f2e1e3;
+}
+
+.featured-food__skeleton-price,
+.featured-food__skeleton-name {
+  height: 14px;
+  margin-right: auto;
+  margin-left: auto;
+  background: #f2e1e3;
+}
+
+.featured-food__skeleton-price {
+  width: 74px;
+}
+
+.featured-food__skeleton-name {
+  width: 68%;
+  margin-top: 10px;
+}
+
+.featured-food__details {
+  min-height: 82px;
+  padding: 13px 12px 16px;
+  text-align: center;
+}
+
+.featured-food__price {
+  margin: 0;
+  color: #bb454b;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.featured-food__name {
+  margin: 5px 0 0;
+  color: #281b1e;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.featured-food__controls {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.featured-food__controls .featured-food__button--previous,
+.featured-food__controls .featured-food__button--next {
+  min-width: 136px;
+  padding: 10px 24px;
+  border: 1px solid #bd434c;
+  box-shadow: none;
+}
+
+.featured-food__controls .featured-food__button--previous {
+  background: #fff;
+  color: #a83640;
+}
+
+.featured-food__controls .featured-food__button--previous:hover:not(:disabled) {
+  background: #fff2f2;
+}
+
+.featured-food__controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.featured-food__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-top: 44px;
+  color: #68565b;
+  text-align: center;
+}
+
+.featured-food__error p {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featured-food__grid .featured-food__card--loaded,
+  .featured-food__image {
+    transition: none;
+  }
+
+  .featured-food__grid .featured-food__card--loaded:hover,
+  .featured-food__card--loaded:hover .featured-food__image {
+    transform: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .featured-food__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .featured-food {
+    padding: 64px 16px;
+  }
+
+  .featured-food__description {
+    font-size: 14px;
+  }
+
+  .featured-food__grid {
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .featured-food__details {
+    min-height: 90px;
+    padding: 11px 8px;
+  }
+
+  .featured-food__name {
+    font-size: 14px;
+  }
+
+  .featured-food__controls {
+    gap: 12px;
+    margin-top: 36px;
+  }
+
+  .featured-food__controls .featured-food__button--previous,
+  .featured-food__controls .featured-food__button--next {
+    min-width: 118px;
+  }
+}

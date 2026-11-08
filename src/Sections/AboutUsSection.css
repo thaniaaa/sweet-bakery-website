@@ -1,0 +1,123 @@
+.about-us-section {
+  width: 100%;
+  padding: 96px 24px;
+  background: #fff;
+}
+
+.about-us-section__container {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: 64px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-us-section__image-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 390px;
+}
+
+.about-us-section__image {
+  display: block;
+  width: 195%;
+  max-width: 1014px;
+  height: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+  pointer-events: none;
+  transition: transform 300ms ease, filter 300ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .about-us-section__image-wrap:hover .about-us-section__image {
+    transform: translateY(-8px) scale(1.04);
+    filter: drop-shadow(0 22px 22px rgba(116, 58, 65, 0.18));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-us-section__image {
+    transition: none;
+  }
+
+  .about-us-section__image-wrap:hover .about-us-section__image {
+    transform: none;
+  }
+}
+
+.about-us-section__content {
+  position: relative;
+  z-index: 1;
+  max-width: 490px;
+}
+
+.about-us-section__title {
+  max-width: 420px;
+  margin: 0;
+  color: #24171b;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(40px, 4.2vw, 60px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.about-us-section__description {
+  margin: 28px 0 32px;
+  color: #68565b;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.about-us-section__button {
+  min-width: 160px;
+}
+
+@media (max-width: 1200px) {
+  .about-us-section__image {
+    width: 150%;
+    max-width: 780px;
+  }
+}
+
+@media (max-width: 800px) {
+  .about-us-section {
+    padding: 72px 24px;
+  }
+
+  .about-us-section__container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 620px;
+  }
+
+  .about-us-section__image-wrap {
+    min-height: 320px;
+  }
+
+  .about-us-section__image {
+    width: 130%;
+  }
+}
+
+@media (max-width: 520px) {
+  .about-us-section {
+    padding: 64px 16px;
+  }
+
+  .about-us-section__image-wrap {
+    min-height: 250px;
+  }
+
+  .about-us-section__image {
+    max-width: calc(100vw - 32px);
+  }
+
+  .about-us-section__description {
+    font-size: 15px;
+  }
+}

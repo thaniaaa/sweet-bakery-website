@@ -1,56 +1,137 @@
-# PRD — Landing Page Toko Bakery
+# Product Requirements Document — Sweet Bakery
 
-## Tujuan
-Membangun landing page toko bakery yang menarik dan responsif menggunakan React, Vite, dan Tailwind CSS. Struktur UI mengikuti prinsip **Component Composition** agar kode modular, bersih, dan mudah dirawat.
+## 1. Ringkasan Produk
 
-## Struktur UI
+Sweet Bakery adalah landing page toko bakery yang dibangun menggunakan **React**, **Vite**, dan **Tailwind CSS**. Halaman ini menampilkan kategori serta produk unggulan, memperkenalkan bisnis, dan menyediakan formulir berlangganan newsletter.
 
-### Section utama
-1. **Navbar** — identitas toko dan navigasi halaman.
-2. **Hero** — pesan utama, ajakan bertindak, dan visual unggulan.
-3. **Categories** — kategori produk bakery.
-4. **Our Featured Food** — daftar produk unggulan dari API.
-5. **About Us** — cerita dan keunggulan toko.
-6. **Newsletter** — formulir berlangganan email.
-7. **Footer** — informasi toko dan tautan pendukung.
+## 2. Tujuan
 
-### Komposisi komponen
-- **Base UI Components:** `Button`, `Card`, `Input`, dan `Skeleton` sebagai blok dasar dengan props fleksibel.
-- **Section Components:** `HeroSection`, `FeaturedFood`, `NewsletterSection`, serta section lain yang merangkai komponen dasar untuk kebutuhan halaman.
-- **App.jsx:** entrypoint ramping yang hanya menyusun section utama secara berurutan.
+- Menyajikan katalog bakery secara menarik dan responsif.
+- Memudahkan pengunjung menemukan produk unggulan.
+- Mengumpulkan email pelanggan melalui newsletter.
+- Menjaga kode bersih, modular, dan mudah dirawat.
 
-## Kontrak API Backend
+## 3. Breakdown Komponen UI
 
-### `GET /api/menu`
-Mengambil daftar produk. Respons sukses berstatus **200 OK**:
+| Section | Fungsi Utama |
+| --- | --- |
+| `Navbar` | Menampilkan identitas brand dan navigasi halaman. |
+| `Hero` | Menampilkan headline, deskripsi singkat, CTA, dan visual utama. |
+| `Categories` | Menampilkan kategori produk bakery. |
+| `Our Featured Food` | Mengambil dan menampilkan daftar produk unggulan dari API. |
+| `About Us` | Menjelaskan profil, nilai, dan keunggulan Sweet Bakery. |
+| `Newsletter` | Menyediakan formulir berlangganan menggunakan email. |
+| `Footer` | Menampilkan informasi bisnis, tautan penting, dan hak cipta. |
+
+## 4. Arsitektur Komponen
+
+Aplikasi menggunakan prinsip **Component Composition** dengan dua tingkatan:
+
+### Base UI Components
+
+Komponen dasar yang dapat digunakan kembali dan menerima props secara fleksibel:
+
+- `Button`
+- `Card`
+- `Input`
+- `Skeleton`
+
+### Section Components
+
+Komponen yang menyusun Base UI Components menjadi bagian halaman yang utuh, antara lain:
+
+- `Navbar`
+- `HeroSection`
+- `CategoriesSection`
+- `FeaturedFood`
+- `AboutSection`
+- `NewsletterSection`
+- `Footer`
+
+`App.jsx` bertindak sebagai entrypoint yang ramping dan hanya merangkai section utama sesuai urutan halaman.
+
+## 5. Kontrak API Backend
+
+### GET `/api/foods`
+
+Mengambil daftar produk bakery.
+
+**Respons berhasil — `200 OK`**
 
 ```json
 [
   {
     "id": 1,
-    "name": "Roti Sourdough",
-    "price": 35000,
-    "image": "/images/sourdough.jpg"
+    "name": "Croissant",
+    "price": 25000,
+    "image": "https://example.com/images/croissant.jpg"
   }
 ]
 ```
 
-`price` berupa angka; `image` berisi URL atau path gambar.
+| Field | Tipe | Keterangan |
+| --- | --- | --- |
+| `id` | number | ID unik produk. |
+| `name` | string | Nama produk. |
+| `price` | number | Harga produk dalam rupiah. |
+| `image` | string | URL gambar produk. |
 
-### `POST /api/subscribe`
-Menerima pendaftaran newsletter dengan payload:
+### POST `/api/subscribe`
+
+Mendaftarkan email pengunjung ke newsletter.
+
+**Payload**
 
 ```json
-{ "email": "pelanggan@example.com" }
+{
+  "email": "pelanggan@example.com"
+}
 ```
 
-- **200 OK:** pendaftaran berhasil. Contoh respons: `{ "message": "Berhasil berlangganan." }`
-- **400 Bad Request:** validasi server gagal karena email kosong atau tidak valid. Contoh respons: `{ "message": "Email wajib diisi dan harus valid." }`
+**Respons berhasil — `200 OK`**
 
-## Perilaku UI
-- **Loading:** tampilkan skeleton loader selama data produk dimuat atau proses langganan berlangsung.
-- **Error:** tampilkan pesan error yang mudah dipahami dan tombol **Coba lagi** untuk mengulangi permintaan yang gagal.
-- **Success:** tampilkan produk setelah pemuatan berhasil dan konfirmasi setelah langganan sukses.
+```json
+{
+  "message": "Berhasil berlangganan."
+}
+```
 
-## Penyimpanan Data
-Untuk tahap awal, data disimpan sementara di **in-memory array**. Data dapat hilang saat server dimulai ulang; persistensi database berada di luar cakupan tahap ini.
+**Validasi gagal — `400 Bad Request`**
+
+Digunakan jika email kosong atau format email tidak valid.
+
+```json
+{
+  "message": "Email wajib diisi dan harus valid."
+}
+```
+
+## 6. Handling UI States
+
+### Loading
+
+- Tampilkan `Skeleton` saat data produk sedang dimuat.
+- Tombol submit newsletter berada dalam keadaan disabled dan menampilkan indikator loading selama permintaan berlangsung.
+
+### Error
+
+- Tampilkan pesan error yang jelas dan ramah pengguna.
+- Pada kegagalan memuat produk, tampilkan tombol **Coba Lagi** untuk mengulang permintaan.
+- Pada validasi newsletter, tampilkan pesan error di dekat input email dan pertahankan nilai input agar mudah diperbaiki.
+
+### Success
+
+- Produk yang berhasil dimuat ditampilkan dalam kumpulan `Card`.
+- Setelah subscription berhasil, tampilkan pesan sukses dan kosongkan input email.
+
+## 7. Penyimpanan Data
+
+Data produk dan daftar email subscriber disimpan sementara dalam **in-memory array** di backend. Data akan kembali ke kondisi awal ketika server dimulai ulang; database persisten belum termasuk dalam cakupan versi ini.
+
+## 8. Kriteria Selesai
+
+- Seluruh section utama tampil sesuai urutan dan responsif.
+- Daftar produk menggunakan `GET /api/foods` dengan state loading, error, retry, dan success.
+- Form newsletter menggunakan `POST /api/subscribe` serta menangani respons `200` dan `400`.
+- `App.jsx` hanya merangkai section utama.
+- Base UI Components dapat digunakan kembali dan tidak terikat pada satu section tertentu.
