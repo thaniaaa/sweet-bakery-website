@@ -1,27 +1,27 @@
 # Sweet Bakery
 
-Sweet Bakery adalah implementasi landing page toko roti menggunakan React, Vite, dan Tailwind CSS. Halaman ini menampilkan kategori produk, katalog makanan unggulan, profil toko, serta formulir berlangganan newsletter.
+Sweet Bakery is a bakery landing page built with React, Vite, and Tailwind CSS. It showcases product categories, featured items, the bakery's story, and a newsletter subscription form.
 
-## Acuan desain
+## Design reference
 
-Tampilan yang direkonstruksi mengacu pada **Bakery Shop Landing Page** dalam gambar referensi berikut. Struktur halaman dan nuansa visualnya dipertahankan, kemudian disesuaikan dengan identitas Sweet Bakery dan aset yang tersedia.
+This project recreates the **Bakery Shop Landing Page** shown in the reference image below. Its overall layout and visual direction were adapted to the Sweet Bakery brand and the assets available in this project.
 
-![Gambar referensi Bakery Shop Landing Page](<src/assets/Bakery Shop Landing page (1).jpg>)
+![Bakery Shop Landing Page design reference](<src/assets/Bakery Shop Landing page (1).jpg>)
 
-## Keputusan implementasi
+## Key decisions
 
-- **Komponen yang dapat digunakan kembali.** `src/Components/` memuat elemen dasar (`Button`, `Card`, `Input`, `Skeleton`), sedangkan `src/Sections/` memuat bagian halaman. Pembagian ini menjaga `App.jsx` tetap ringkas dan memudahkan perawatan tampilan.
-- **Interaksi yang jelas.** Hero berganti gambar setiap tiga detik. Katalog produk menyediakan navigasi Previous/Next serta state loading, error, dan tombol untuk mencoba kembali. Formulir newsletter menampilkan indikator proses dan umpan balik hasil pengiriman.
-- **Halaman detail terpisah.** Bagian About Us pada landing page mengarahkan pengunjung ke `/about-us/` untuk membaca profil toko lebih lengkap.
-- **Penyimpanan sederhana untuk cakupan proyek.** Data produk dan alamat email pelanggan disimpan sementara dalam array di memori server. Data pelanggan tidak persisten setelah server dimulai ulang.
+- **Reusable components.** `src/Components/` contains base UI elements (`Button`, `Card`, `Input`, and `Skeleton`), while `src/Sections/` contains page sections. This keeps `App.jsx` focused on composing the page and makes the UI easier to maintain.
+- **Clear interaction states.** The hero carousel changes slides every three seconds. The featured-food section includes Previous/Next navigation, loading skeletons, an error message, and a retry action. The newsletter form shows a loading indicator and submission feedback.
+- **Dedicated About Us page.** The About Us section links to `/about-us/` for a more detailed introduction to the bakery.
+- **Temporary data storage.** Product data and subscriber emails are stored in in-memory arrays. Subscriber data is not retained when the server restarts.
 
 ## API
 
-Endpoint berikut dapat dicoba saat menjalankan `npm run dev`.
+The following endpoints are available when running `npm run dev`.
 
 ### `GET /api/foods`
 
-Mengembalikan daftar produk. Contoh di bawah memperlihatkan satu item dari respons `200 OK`; respons sebenarnya berisi seluruh produk.
+Returns the product list. The example shows one item from a `200 OK` response; the actual response contains all products.
 
 ```http
 GET /api/foods HTTP/1.1
@@ -32,11 +32,11 @@ Content-Type: application/json
 [{"id":1,"name":"Mango Cake","price":38000,"image":"/foods/product1.jpg"}]
 ```
 
-`price` dinyatakan dalam rupiah dan `image` menunjuk ke aset dalam direktori `public/foods/`.
+`price` is in Indonesian rupiah, and `image` points to an asset in `public/foods/`.
 
 ### `POST /api/subscribe`
 
-Menerima alamat email dalam format JSON. Contoh pendaftaran berhasil:
+Accepts an email address as JSON. Example of a successful subscription:
 
 ```http
 POST /api/subscribe HTTP/1.1
@@ -50,22 +50,22 @@ Content-Type: application/json
 {"message":"Berhasil berlangganan."}
 ```
 
-Email kosong atau tidak valid menghasilkan `400 Bad Request` dengan respons `{"message":"Email wajib diisi dan harus valid."}`. Kedua endpoint mengembalikan `405 Method Not Allowed` untuk metode HTTP yang tidak didukung.
+An empty or invalid email returns `400 Bad Request` with `{"message":"Email wajib diisi dan harus valid."}`. Both endpoints return `405 Method Not Allowed` for unsupported HTTP methods.
 
-## Menjalankan proyek secara lokal
+## Run locally
 
-Pastikan Node.js dan npm sudah terpasang. Dari direktori utama proyek, jalankan:
+With Node.js and npm installed, run the following commands from the project root:
 
 ```bash
 npm ci
 npm run dev
 ```
 
-Buka alamat yang ditampilkan Vite di terminal (umumnya `http://localhost:5173/`). Pemeriksaan kode dan build dapat dijalankan dengan:
+Open the local URL printed by Vite (typically `http://localhost:5173/`). To run the code checks and create a production build:
 
 ```bash
 npm run lint
 npm run build
 ```
 
-**Catatan deployment:** middleware API di `vite.config.js` hanya berjalan pada server pengembangan. Agar kedua endpoint berfungsi setelah deployment, handler dalam `api/` perlu dijalankan pada platform serverless; build statis saja tidak menyediakan API.
+**Deployment note:** The API middleware in `vite.config.js` runs only in the development server. To keep the endpoints available after deployment, the handlers in `api/` must run on a serverless platform; a static build alone does not serve the API.
